@@ -1,4 +1,8 @@
+import 'dart:math';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_4/src/tab/tab.dart';
 
@@ -55,7 +59,7 @@ class _TabBarState extends State<TabBarDemo>
     final theme = Theme.of(context);
     Widget tabBarView;
     if (isDesktop) {
-      final isTextDirectionRtl = true;
+      final isTextDirectionRtl = false;
       final verticalRotation =
           isTextDirectionRtl ? turnsToRotateLeft : turnsToRotateRight;
       final revertVerticalRotation =
@@ -82,17 +86,51 @@ class _TabBarState extends State<TabBarDemo>
                 RotatedBox(
                   quarterTurns: verticalRotation,
                   child: LuffiTabBar(
-                    tabs: _buildTabs(
-                            context: context, theme: theme, isVertical: true)
-                        .map((widget) {
-                      return RotatedBox(
-                        quarterTurns: revertVerticalRotation,
-                        child: widget,
-                      );
-                    }).toList(),
+                    tabs: [
+                      LuffiTab(
+                        tabIndex: 0,
+                        iconData: Icons.pie_chart,
+                        theme: theme,
+                        title: 'title',
+                        tabController: _tabController,
+                        isVertical: true,
+                      ),
+                      LuffiTab(
+                        tabIndex: 1,
+                        iconData: Icons.pie_chart,
+                        theme: theme,
+                        title: 'title',
+                        tabController: _tabController,
+                        isVertical: true,
+                      ),
+                      LuffiTab(
+                        tabIndex: 3,
+                        iconData: Icons.pie_chart,
+                        theme: theme,
+                        title: 'title',
+                        tabController: _tabController,
+                        isVertical: true,
+                      ),
+                      LuffiTab(
+                        tabIndex: 4,
+                        iconData: Icons.pie_chart,
+                        theme: theme,
+                        title: 'title',
+                        tabController: _tabController,
+                        isVertical: true,
+                      ),
+                      LuffiTab(
+                        tabIndex: 5,
+                        iconData: Icons.pie_chart,
+                        theme: theme,
+                        title: 'title',
+                        tabController: _tabController,
+                        isVertical: true,
+                      ),
+                    ],
                     tabController: _tabController,
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -111,9 +149,29 @@ class _TabBarState extends State<TabBarDemo>
           ))
         ],
       );
-    } else {}
+    } else {
+      tabBarView = Column(
+        children: [
+          LuffiTabBar(
+            tabs: _buildTabs(context: context, theme: theme),
+            tabController: _tabController,
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: _buildTabViews(),
+            ),
+          ),
+        ],
+      );
+    }
     return Directionality(
-        textDirection: TextDirection.rtl,
+      textDirection: TextDirection.rtl,
+      child: MediaQuery(
+        data: MediaQuery.of(context).copyWith(
+          // ignore: deprecated_member_use
+          textScaleFactor: -1,
+        ),
         child: Scaffold(
           body: SafeArea(
               top: !isDesktop,
@@ -128,7 +186,9 @@ class _TabBarState extends State<TabBarDemo>
                   child: tabBarView,
                 ),
               )),
-        ));
+        ),
+      ),
+    );
   }
 
   List<Widget> _buildTabs(
@@ -157,31 +217,53 @@ class _TabBarState extends State<TabBarDemo>
 
   List<Widget> _buildTabViews() {
     // final localizetions =
-    return const [OverviewView(), OverviewView()];
+    return const [SettingsView(), SettingsView()];
   }
 }
 
-class OverviewView extends StatefulWidget {
-  const OverviewView({super.key});
+class SettingsView extends StatefulWidget {
+  const SettingsView({super.key});
 
   @override
-  State<OverviewView> get createState => _OverviewViewState();
+  State<SettingsView> get createState => _SettingsViewState();
 }
 
-class _OverviewViewState extends State<OverviewView> {
+class _SettingsViewState extends State<SettingsView> {
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      restorationId: 'overview_scroll_view',
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 12),
-        child: Column(
+    return FocusTraversalGroup(
+      child: Container(
+        padding: EdgeInsets.only(top: 24),
+        child: ListView(
+          restorationId: 'settings_list_view',
+          shrinkWrap: true,
           children: [
-            //   _AlertsView(alerts: alerts.sublist(0, 1)),
-            SizedBox(height: 12),
-            //   const _OverviewGrid(spacing: 12),
+            Text("1"),
+            Text("2"),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _SettingsItem extends StatelessWidget {
+  const _SettingsItem(this.title);
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.white,
+        padding: EdgeInsets.zero,
+      ),
+      onPressed: () {},
+      child: Container(
+        alignment: AlignmentDirectional.centerStart,
+        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 28),
+        child: Text(title),
       ),
     );
   }

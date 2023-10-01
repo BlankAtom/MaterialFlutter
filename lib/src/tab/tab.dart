@@ -18,14 +18,15 @@ class LuffiTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FocusTraversalOrder(
-        order: const NumericFocusOrder(0),
-        child: TabBar(
-          isScrollable: true,
-          labelPadding: EdgeInsets.zero,
-          tabs: tabs,
-          controller: tabController,
-          indicatorColor: Colors.transparent, // 隐藏标志
-        ));
+      order: const NumericFocusOrder(1),
+      child: TabBar(
+        isScrollable: false,
+        labelPadding: EdgeInsets.zero,
+        tabs: [],
+        controller: tabController,
+        indicatorColor: Colors.transparent, // 隐藏标志
+      ),
+    );
   }
 }
 
