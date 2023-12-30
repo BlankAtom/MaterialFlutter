@@ -85,68 +85,25 @@ class _TabBarState extends State<TabBarDemo>
                 const SizedBox(height: 24),
                 RotatedBox(
                   quarterTurns: verticalRotation,
-                  child: LuffiTabBar(
-                    tabs: [
-                      LuffiTab(
-                        tabIndex: 0,
-                        iconData: Icons.pie_chart,
-                        theme: theme,
-                        title: 'title',
-                        tabController: _tabController,
-                        isVertical: true,
-                      ),
-                      LuffiTab(
-                        tabIndex: 1,
-                        iconData: Icons.pie_chart,
-                        theme: theme,
-                        title: 'title',
-                        tabController: _tabController,
-                        isVertical: true,
-                      ),
-                      LuffiTab(
-                        tabIndex: 3,
-                        iconData: Icons.pie_chart,
-                        theme: theme,
-                        title: 'title',
-                        tabController: _tabController,
-                        isVertical: true,
-                      ),
-                      LuffiTab(
-                        tabIndex: 4,
-                        iconData: Icons.pie_chart,
-                        theme: theme,
-                        title: 'title',
-                        tabController: _tabController,
-                        isVertical: true,
-                      ),
-                      LuffiTab(
-                        tabIndex: 5,
-                        iconData: Icons.pie_chart,
-                        theme: theme,
-                        title: 'title',
-                        tabController: _tabController,
-                        isVertical: true,
-                      ),
-                    ],
-                    tabController: _tabController,
-                  ),
+                  child: Text(''),
                 ),
               ],
             ),
           ),
           Expanded(
-              child: RotatedBox(
-            quarterTurns: verticalRotation,
-            child: TabBarView(
-              controller: _tabController,
-              children: _buildTabViews()
-                  .map((e) => RotatedBox(
-                        quarterTurns: revertVerticalRotation,
-                        child: e,
-                      ))
-                  .toList(),
+            child: RotatedBox(
+              quarterTurns: verticalRotation,
+              child: TabBarView(
+                controller: _tabController,
+                children: _buildTabViews()
+                    .map((e) => RotatedBox(
+                          quarterTurns: revertVerticalRotation,
+                          child: e,
+                        ))
+                    .toList(),
+              ),
             ),
-          ))
+          )
         ],
       );
     } else {
@@ -195,24 +152,7 @@ class _TabBarState extends State<TabBarDemo>
       {required BuildContext context,
       required ThemeData theme,
       bool isVertical = false}) {
-    return [
-      LuffiTab(
-        tabIndex: 0,
-        iconData: Icons.pie_chart,
-        theme: theme,
-        title: 'title',
-        tabController: _tabController,
-        isVertical: isVertical,
-      ),
-      LuffiTab(
-        tabIndex: 1,
-        iconData: Icons.pie_chart,
-        theme: theme,
-        title: 'title1',
-        tabController: _tabController,
-        isVertical: isVertical,
-      )
-    ];
+    return [];
   }
 
   List<Widget> _buildTabViews() {
